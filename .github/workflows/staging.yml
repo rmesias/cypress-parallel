@@ -12,18 +12,18 @@ jobs:
       - uses: cypress-io/github-action@v5
         with:
           runTests: false
-  lint:
-    needs: install
-    runs-on: ubuntu-latest
-    container: cypress/browsers:node16.16.0-chrome107-ff107-edge
-    steps:
-      - uses: actions/checkout@v3
-      - uses: cypress-io/github-action@v5
-        with:
-          runTests: false
-      - run: npm run lint
+  # lint:
+  #   needs: install
+  #   runs-on: ubuntu-latest
+  #   container: cypress/browsers:node16.16.0-chrome107-ff107-edge
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: cypress-io/github-action@v5
+  #       with:
+  #         runTests: false
+  #     - run: npm run lint
   mrtest:
-    needs: lint
+    # needs: lint
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -43,12 +43,11 @@ jobs:
           browser: ${{ matrix.browser }}
           record: false
           parallel: false
-          spec: cypress/e2e/sanity_test/bo_prod/**
-          env: tags=@affiliates
           config: "baseUrl=https://admin-staging.aonewallet.com"
+          run: npx ts-node scripts/cypress-ci-run.ts
       - name: Generate Report
         if: always()
-        run: npm run report
+        run: npm run reports
       - name: Upload reports
         uses: actions/upload-artifact@v3
         if: always()

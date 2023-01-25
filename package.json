@@ -9,7 +9,6 @@
     "bo-regression": "CYPRESS_BASE_URL=https://admin-staging.aonewallet.com npx cypress open",
     "bo-sanity": "CYPRESS_BASE_URL=https://admin.nexiux.io npx cypress run",
     "site-sanity": "CYPRESS_BASE_URL=https://qa.nexiux.io npx cypress run --spec 'cypress/integration/web-sanity/**/*'",
-    "prepare": "husky install",
     "cy:run": "npx cypress run --env tags=@affiliates --spec 'cypress/e2e/sanity_test/bo_prod/**/*'",
     "reports": "node generate-cucumber-html-reporter.js"
   },

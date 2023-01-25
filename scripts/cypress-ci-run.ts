@@ -43,7 +43,7 @@ function getEnvTag(
 
   const value = String(process.env[varName]);
 
-  if (isNaN(value as any)) {
+  if (value as any instanceof String) {
     throw Error(`${varName} is not a string.`);
   }
 

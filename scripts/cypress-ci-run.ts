@@ -16,7 +16,10 @@ type GetEnvOptions = {
   required?: boolean;
 };
 
-function getEnvNumber(varName: string, { required = false }: GetEnvOptions = {}): number {
+function getEnvNumber(
+  varName: string,
+  { required = false }: GetEnvOptions = {},
+): number {
   if (required && process.env[varName] === undefined) {
     throw Error(`${varName} is not set.`);
   }
@@ -30,18 +33,36 @@ function getEnvNumber(varName: string, { required = false }: GetEnvOptions = {})
   return value;
 }
 
+function getEnvTag(
+  varName: string,
+  { required = false }: GetEnvOptions = {},
+): string {
+  if (required && process.env[varName] === undefined) {
+    throw Error(`${varName} is not set.`);
+  }
+
+  const value = String(process.env[varName]);
+
+  if (isNaN(value as any)) {
+    throw Error(`${varName} is not a string.`);
+  }
+
+  return value;
+}
+
 function getArgs() {
   return {
     totalRunners: getEnvNumber('TOTAL_RUNNERS', { required: true }),
     thisRunner: getEnvNumber('THIS_RUNNER', { required: true }),
+    testTags: getEnvTag('TEST_TAGS', { required: true }),
   };
 }
 
 (async () => {
   try {
-    const { totalRunners, thisRunner } = getArgs();
+    const { totalRunners, thisRunner, testTags } = getArgs();
 
-    const command = `npx cypress run --env tags=@affiliates --spec "$(npx ts-node scripts/cypress-spec-split.ts ${totalRunners} ${thisRunner})"`;
+    const command = `npx cypress run --env tags=@${testTags} --spec "$(npx ts-node scripts/cypress-spec-split.ts ${totalRunners} ${thisRunner})"`;
 
     console.log(`Running: ${command}`);
 

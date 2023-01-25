@@ -50,6 +50,7 @@ jobs:
           # the number of containers in the job matrix
           TOTAL_RUNNERS: 5
           THIS_RUNNER: ${{ matrix.containers }}
+          TEST_TAGS: 'affiliates'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Generate Report
         if: always()

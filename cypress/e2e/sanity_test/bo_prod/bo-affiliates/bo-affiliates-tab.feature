@@ -1,3 +1,4 @@
+@affiliates
 Feature: Affiliates tab
 
   Scenario: Verify admin can click affiliates tab

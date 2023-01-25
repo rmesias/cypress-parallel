@@ -1,3 +1,4 @@
+@members
 Feature: Member - Member Reports | Member Access Audit history
 
   Scenario: Verify can see different tabs under Member Access audit history

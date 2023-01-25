@@ -9,19 +9,21 @@
     "bo-regression": "CYPRESS_BASE_URL=https://admin-staging.aonewallet.com npx cypress open",
     "bo-sanity": "CYPRESS_BASE_URL=https://admin.nexiux.io npx cypress run",
     "site-sanity": "CYPRESS_BASE_URL=https://qa.nexiux.io npx cypress run --spec 'cypress/integration/web-sanity/**/*'",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "cy:run": "npx cypress run --env tags=@affiliates --spec 'cypress/e2e/sanity_test/bo_prod/**/*'",
+    "reports": "node generate-cucumber-html-reporter.js"
   },
   "cypress-cucumber-preprocessor": {
     "json": {
       "enabled": true,
-      "formatter": "cucumber-json-formatter"
+      "formatter": "./jsonFormatter/cucumber-json-formatter",
+      "output": "cypress/cucumber-json/cucumber-report.json"
     },
     "stepDefinitions": [
       "cypress/e2e/[filepath]/**/*.ts",
-      "cypress/e2e/[filepath].ts",
-      "cypress/support/step_definitions/**/*.ts"
+      "cypress/e2e/[filepath].ts"
     ],
-    "filterSpecs": false
+    "filterSpecs": true
   },
   "repository": {
     "type": "git",
@@ -52,12 +54,13 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-prettier": "^4.0.0",
     "moment": "^2.29.2",
+    "multiple-cucumber-html-reporter": "^3.1.0",
     "prettier": "^2.5.1",
     "ts-loader": "^9.3.1",
     "typescript": "^4.8.2"
   },
   "devDependencies": {
-    "@testing-library/cypress": "^8.0.3",
+    "@testing-library/cypress": "latest",
     "cypress": "^12.4.0",
     "husky": "^8.0.0"
   }

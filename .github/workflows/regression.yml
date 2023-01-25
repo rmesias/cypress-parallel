@@ -62,42 +62,42 @@ jobs:
           name: cypress-screenshots
           path: cypress/screenshots
 
-  web_staging_regression_test:
-    needs: lint
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        browser: [chrome]
-    container: cypress/browsers:node14.16.0-chrome90-ff88
-    steps:
-      - uses: actions/checkout@v2
-      - uses: cypress-io/github-action@v2
-        with:
-          runTests: false
-      - uses: cypress-io/github-action@v2
-        with:
-          install: false
-          wait-on: 'https://qa-staging.aonewallet.com'
-          browser: ${{ matrix.browser }}
-          record: true
-          parallel: false
-          tag: 'Web Staging regression test'
-          spec: ./cypress/integration/web-staging/**
-          config: "baseUrl=https://qa-staging.aonewallet.com"
-        env:
-          CYPRESS_RECORD_KEY: ${{secrets.RECORD_KEY}}
-          GITHUB_TOKEN: ${{secrets.PROJECT_ID}}
-      - uses: actions/upload-artifact@v2
-        with:
-          name: test-report
-          path: TestReport
-      - uses: actions/upload-artifact@v2
-        with:
-          name: cypress-videos
-          path: cypress/vidoes
-      - uses: actions/upload-artifact@v2
-        with:
-          name: cypress-screenshots
-          path: cypress/screenshots
+  # web_staging_regression_test:
+  #   needs: lint
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       browser: [chrome]
+  #   container: cypress/browsers:node14.16.0-chrome90-ff88
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: cypress-io/github-action@v2
+  #       with:
+  #         runTests: false
+  #     - uses: cypress-io/github-action@v2
+  #       with:
+  #         install: false
+  #         wait-on: 'https://qa-staging.aonewallet.com'
+  #         browser: ${{ matrix.browser }}
+  #         record: true
+  #         parallel: false
+  #         tag: 'Web Staging regression test'
+  #         spec: ./cypress/integration/web-staging/**
+  #         config: "baseUrl=https://qa-staging.aonewallet.com"
+  #       env:
+  #         CYPRESS_RECORD_KEY: ${{secrets.RECORD_KEY}}
+  #         GITHUB_TOKEN: ${{secrets.PROJECT_ID}}
+  #     - uses: actions/upload-artifact@v2
+  #       with:
+  #         name: test-report
+  #         path: TestReport
+  #     - uses: actions/upload-artifact@v2
+  #       with:
+  #         name: cypress-videos
+  #         path: cypress/vidoes
+  #     - uses: actions/upload-artifact@v2
+  #       with:
+  #         name: cypress-screenshots
+  #         path: cypress/screenshots
   

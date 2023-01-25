@@ -1,0 +1,62 @@
+---
+name: UI-E2E Test Cypress
+on: 
+  workflow_dispatch:
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node16.16.0-chrome107-ff107-edge
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cypress-io/github-action@v5
+        with:
+          runTests: false
+  lint:
+    needs: install
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node16.16.0-chrome107-ff107-edge
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cypress-io/github-action@v5
+        with:
+          runTests: false
+      - run: npm run lint
+  mrtest:
+    needs: lint
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome]
+    container: cypress/browsers:node16.16.0-chrome107-ff107-edge
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cypress-io/github-action@v5
+        with:
+          runTests: false
+      - uses: cypress-io/github-action@v5
+        with:
+          install: false
+          wait-on: 'https://admin-staging.aonewallet.com'
+          browser: ${{ matrix.browser }}
+          record: false
+          parallel: false
+          spec: cypress/e2e/sanity_test/bo_prod/**
+          env: tags=@affiliates
+          config: "baseUrl=https://admin-staging.aonewallet.com"
+      - name: Generate Report
+        if: always()
+        run: npm run report
+      - name: Upload reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: cucumber-reports
+          path: cypress/test-reports/
+      - name: Upload screenshots  
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: test/cypress/screenshots

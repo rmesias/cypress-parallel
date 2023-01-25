@@ -1,3 +1,4 @@
+@members
 Feature: Member - Member Reports | Member IP Address Summary
 
   Background: 

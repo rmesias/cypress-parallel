@@ -1,3 +1,4 @@
+@members
 Feature: Members - Member Interaction Logs Report
 
   Background: 

@@ -1,3 +1,4 @@
+@affiliates
 Feature: Affiliates Tab
 
 Scenario: Verify can see different tabs under affiliates

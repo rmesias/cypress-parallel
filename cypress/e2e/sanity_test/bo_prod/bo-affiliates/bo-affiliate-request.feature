@@ -1,3 +1,4 @@
+@affiliates
 Feature: Affiliates - Affiliate Request
 
   Background: 

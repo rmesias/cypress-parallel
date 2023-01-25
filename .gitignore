@@ -1,8 +1,6 @@
 node_modules
 cypress/videos
 cypress/screenshots
-TestReport
-mochawesome-report
-
-k6/dist
-.aws
+test-reports
+cucumber-json
+cucumber-messages.ndjson

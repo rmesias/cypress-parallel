@@ -1,3 +1,4 @@
+@members
 Feature: Members- Member Reports
 
   Scenario: Verify member reports contains sub menu items

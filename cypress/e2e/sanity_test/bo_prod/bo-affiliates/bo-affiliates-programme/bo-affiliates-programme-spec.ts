@@ -5,8 +5,8 @@ let context: Cypress.LoginOutputs;
 before(() => {
   cy.boAuthentication({
     inputs: {
-      credentials: Cypress.env(`boProdCredentials`),
-      site: Cypress.env(`prodAuthURL`),
+      credentials: Cypress.env(`boStagingCredentials`),
+      site: Cypress.env(`backOfficeStagingAuthURL`),
     },
   }).then((response) => {
     context = response;
@@ -16,7 +16,6 @@ before(() => {
     cy.saveLocalStorage();
   });
 });
-
 beforeEach(() => {
   cy.restoreLocalStorage();
   cy.visit(`/`);

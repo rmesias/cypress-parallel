@@ -1,3 +1,4 @@
+@members
 Feature: Member - Member Reports | Member Session Duration
 
   Background: 

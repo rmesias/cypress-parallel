@@ -7,12 +7,12 @@ import minimatch from 'minimatch';
 // import them here and in cypress.config, so that both files use
 // the same values.
 const specPatterns = {
-  specPattern: 'cypress/e2e/sanity_test/bo_prod/**/*.{feature}',
+  specPattern: 'cypress/e2e/sanity_test/bo_prod/**/*.feature',
   excludeSpecPattern: ['tsconfig.json'],
 };
 
 // used to roughly determine how many tests are in a file
-const testPattern = /(^|\s)(feature)\(/g;
+const testPattern = /(^|\s)(Scenario|Scenario Outline)\(/g;
 
 const isCli = require.main?.filename === __filename;
 

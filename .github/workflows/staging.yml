@@ -45,7 +45,12 @@ jobs:
           record: false
           parallel: false
           config: "baseUrl=https://admin-staging.aonewallet.com"
-          run: npx ts-node scripts/cypress-ci-run.ts
+          command: npx ts-node scripts/cypress-ci-run.ts
+        env:
+          # the number of containers in the job matrix
+          TOTAL_RUNNERS: 5
+          THIS_RUNNER: ${{ matrix.containers }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Generate Report
         if: always()
         run: npm run reports

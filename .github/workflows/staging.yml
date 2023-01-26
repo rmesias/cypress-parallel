@@ -12,16 +12,6 @@ jobs:
       - uses: cypress-io/github-action@v5
         with:
           runTests: false
-  # lint:
-  #   needs: install
-  #   runs-on: ubuntu-latest
-  #   container: cypress/browsers:node16.16.0-chrome107-ff107-edge
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: cypress-io/github-action@v5
-  #       with:
-  #         runTests: false
-  #     - run: npm run lint
   mrtest:
     # needs: lint
     needs: install
@@ -33,11 +23,14 @@ jobs:
         containers: [0,1,2,3,4]
     container: cypress/browsers:node16.16.0-chrome107-ff107-edge
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
       - uses: cypress-io/github-action@v5
         with:
           runTests: false
-      - uses: cypress-io/github-action@v5
+
+      - name: Run Test
+        uses: cypress-io/github-action@v5
         with:
           install: false
           wait-on: 'https://admin-staging.aonewallet.com'
@@ -45,7 +38,7 @@ jobs:
           record: false
           parallel: false
           config: "baseUrl=https://admin-staging.aonewallet.com"
-          command: npx ts-node scripts/cypress-ci-run.ts
+        - run: cypress run --spec $(node scripts/cypress-spec-split.ts 5 ${{ matrix.containers }})
         env:
           # the number of containers in the job matrix
           TOTAL_RUNNERS: 5

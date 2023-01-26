@@ -37,7 +37,7 @@ jobs:
           TOTAL_RUNNERS: 5
           THIS_RUNNER: ${{ matrix.containers }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TEST_TAGS: ${{inputs.test-tags}}
+          TEST_TAGS: 'affiliates'
           BASE_URL: ${{inputs.environment}}
           BROWSER: ${{ matrix.browser }}
           DATE_TIMESTAMP: $(date +'%d-%m-%YT%H:%M:%S')

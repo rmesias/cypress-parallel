@@ -23,34 +23,16 @@ jobs:
         containers: [0,1,2,3,4]
     container: cypress/browsers:node16.16.0-chrome107-ff107-edge
     steps:
-      - uses: actions/checkout@v2
-      - uses: cypress-io/github-action@v2
+      - uses: actions/checkout@v3
+      - uses: cypress-io/github-action@v5
         with:
           runTests: false
-          install: false
           wait-on: 'https://admin-staging.aonewallet.com'
           browser: ${{ matrix.browser }}
           record: false
           parallel: false
-          config: "baseUrl=https://admin-staging.aonewallet.com"
-          spec: $(node scripts/cypress-spec-split.ts 5 ${{ matrix.containers }})
-        env:
-          TEST_RUN: $(date +'%d-%m-%YT%H:%M:%S')
-      - run: echo $TEST_RUN
       - run: CYPRESS_BASE_URL=https://admin-staging.aonewallet.com/ npx cypress run --env tags=@affiliates --spec $(npx ts-node scripts/cypress-spec-split.ts 5 ${{ matrix.containers }})
 
-      - name: Generate Report
-        if: always()
-        run: npm run reports
-      - name: Upload reports
-        uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: cucumber-reports
-          path: cypress/test-reports/
-      - name: Upload screenshots  
-        uses: actions/upload-artifact@v3
-        if: failure()
-        with:
-          name: cypress-screenshots
-          path: test/cypress/screenshots
+      - name: Set current date as env variable
+        run: echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+        

@@ -1,4 +1,3 @@
-@affiliates
 Feature: Affiliates - Affiliate Criteria
 
   Background: 

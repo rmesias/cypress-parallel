@@ -41,7 +41,7 @@ jobs:
           config: "baseUrl=https://admin-staging.aonewallet.com"
           spec: $(node scripts/cypress-spec-split.ts 5 ${{ matrix.containers }})
           env: tags=@affiliates
-      - run: CYPRESS_BASE_URL=https://admin-staging.aonewallet.com/ npx cypress run --env tags=@affiliates --spec $(node scripts/cypress-spec-split.ts 5 ${{ matrix.containers }})
+      - run: CYPRESS_BASE_URL=https://admin-staging.aonewallet.com/ npx cypress run --env tags=@affiliates --spec $(npx ts-node scripts/cypress-spec-split.ts 5 ${{ matrix.containers }})
 
       - name: Generate Report
         if: always()

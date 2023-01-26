@@ -31,7 +31,7 @@ jobs:
           browser: ${{ matrix.browser }}
           record: false
           parallel: false
-      - run: npx ts-node scripts/cypress-ci-run.ts
+          command: npx ts-node scripts/cypress-ci-run.ts
         env:
         # the number of containers in the job matrix
           TOTAL_RUNNERS: 5

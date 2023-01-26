@@ -38,7 +38,7 @@ jobs:
           record: false
           parallel: false
           config: "baseUrl=https://admin-staging.aonewallet.com"
-      - run: cypress run --spec $(node scripts/cypress-spec-split.ts 5 ${{ matrix.containers }})
+      - run: npx cypress run --env tags=@affiliates --spec $(node scripts/cypress-spec-split.ts 5 ${{ matrix.containers }})
         env:
           # the number of containers in the job matrix
           TOTAL_RUNNERS: 5

@@ -31,7 +31,7 @@ jobs:
           browser: ${{ matrix.browser }}
           record: false
           parallel: false
-      - run: CYPRESS_BASE_URL=https://admin-staging.aonewallet.com/ npx cypress run --env tags=@affiliates --spec $(npx ts-node scripts/cypress-spec-split.ts 5 ${{ matrix.containers }})
+      - run: npx ts-node scripts/cypress-ci-run.ts
 
       - name: Set current date as env variable
         run: echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV

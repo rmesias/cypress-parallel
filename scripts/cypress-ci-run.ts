@@ -62,7 +62,7 @@ function getArgs() {
   try {
     const { totalRunners, thisRunner, testTags } = getArgs();
 
-    const command = `npx cypress run --env tags=@${testTags} --spec "$(npx ts-node scripts/cypress-spec-split.ts ${totalRunners} ${thisRunner})"`;
+    const command = `npx cypress run --env tags=@${testTags}, jsonOutput="cypress/cucumber-json/cucumber-report.json" --spec "$(npx ts-node scripts/cypress-spec-split.ts ${totalRunners} ${thisRunner})"`;
 
     console.log(`Running: ${command}`);
 

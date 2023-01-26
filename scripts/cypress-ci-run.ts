@@ -54,15 +54,14 @@ function getArgs() {
   return {
     totalRunners: getEnvNumber('TOTAL_RUNNERS', { required: true }),
     thisRunner: getEnvNumber('THIS_RUNNER', { required: true }),
-    testTags: getEnvTag('TEST_TAGS', { required: true }),
   };
 }
 
 (async () => {
   try {
-    const { totalRunners, thisRunner, testTags } = getArgs();
+    const { totalRunners, thisRunner } = getArgs();
 
-    const command = `npx cypress run --env tags=@${testTags}, jsonOutput="cypress/cucumber-json/cucumber-report.json" --spec "$(npx ts-node scripts/cypress-spec-split.ts ${totalRunners} ${thisRunner})"`;
+    const command = `npx cypress run --env tags=@affiliates, jsonOutput="cypress/cucumber-json/cucumber-report.json" --spec "$(npx ts-node scripts/cypress-spec-split.ts ${totalRunners} ${thisRunner})"`;
 
     console.log(`Running: ${command}`);
 

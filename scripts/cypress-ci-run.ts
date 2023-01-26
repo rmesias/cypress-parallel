@@ -33,23 +33,6 @@ function getEnvNumber(
   return value;
 }
 
-function getEnvTag(
-  varName: string,
-  { required = false }: GetEnvOptions = {},
-): string {
-  if (required && process.env[varName] === undefined) {
-    throw Error(`${varName} is not set.`);
-  }
-
-  const value = String(process.env[varName]);
-
-  if (value as any instanceof String) {
-    throw Error(`${varName} is not a string.`);
-  }
-
-  return value;
-}
-
 function getArgs() {
   return {
     totalRunners: getEnvNumber('TOTAL_RUNNERS', { required: true }),

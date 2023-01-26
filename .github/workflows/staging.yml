@@ -38,13 +38,8 @@ jobs:
           record: false
           parallel: false
           config: "baseUrl=https://admin-staging.aonewallet.com"
-      - run: npx cypress run --env tags=@affiliates --spec $(node scripts/cypress-spec-split.ts 5 ${{ matrix.containers }})
-        env:
-          # the number of containers in the job matrix
-          TOTAL_RUNNERS: 5
-          THIS_RUNNER: ${{ matrix.containers }}
-          TEST_TAGS: 'affiliates'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          spec: $(node scripts/cypress-spec-split.ts 5 ${{ matrix.containers }})
+          env: tags=@affiliates
       - name: Generate Report
         if: always()
         run: npm run reports

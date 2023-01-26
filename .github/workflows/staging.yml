@@ -26,20 +26,12 @@ jobs:
       - uses: actions/checkout@v3
       - uses: cypress-io/github-action@v5
         with:
+          runTests: false
           wait-on: 'https://admin-staging.aonewallet.com'
           browser: ${{ matrix.browser }}
           record: false
           parallel: false
-          command: ts-node scripts/cypress-ci-run.ts
-        env:
-        # the number of containers in the job matrix
-          TOTAL_RUNNERS: 5
-          THIS_RUNNER: ${{ matrix.containers }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BASE_URL: ${{inputs.environment}}
-          BROWSER: ${{ matrix.browser }}
-          DATE_TIMESTAMP: $(date +'%d-%m-%YT%H:%M:%S')
+      - run: CYPRESS_BASE_URL=https://admin-staging.aonewallet.com/ npx cypress run --env tags=@affiliates, jsonOutput="cypress/cucumber-json/cucumber-report_${{ matrix.containers }}.json" --spec $(npx ts-node scripts/cypress-spec-split.ts 5 ${{ matrix.containers }})
 
       - name: Set current date as env variable
         run: echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
-        

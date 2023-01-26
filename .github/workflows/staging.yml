@@ -32,6 +32,7 @@ jobs:
       - name: Run Test
         uses: cypress-io/github-action@v5
         with:
+          runTests: false
           install: false
           wait-on: 'https://admin-staging.aonewallet.com'
           browser: ${{ matrix.browser }}
@@ -40,6 +41,8 @@ jobs:
           config: "baseUrl=https://admin-staging.aonewallet.com"
           spec: $(node scripts/cypress-spec-split.ts 5 ${{ matrix.containers }})
           env: tags=@affiliates
+      - run: CYPRESS_BASE_URL=https://admin-staging.aonewallet.com/ npx cypress run --env tags=@affiliates --spec $(node scripts/cypress-spec-split.ts 5 ${{ matrix.containers }})
+
       - name: Generate Report
         if: always()
         run: npm run reports

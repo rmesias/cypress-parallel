@@ -37,4 +37,5 @@ jobs:
           --spec $(npx ts-node scripts/cypress-spec-split.ts 5 ${{ matrix.containers }}) --browser ${{ matrix.browser }}
 
       - name: Set current date as env variable
+        if: always()
         run: echo "### report link https://admin-staging.aonewallet.com/  :" >> $GITHUB_STEP_SUMMARY

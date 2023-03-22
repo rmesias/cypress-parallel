@@ -16,7 +16,7 @@ jobs:
   mrtest:
     needs: install
     runs-on: ubuntu-latest
-    if: ${{jobs.status == 'sucess'}}
+    if: ${{ job.status == 'sucess' }}
     continue-on-error: true
     strategy:
       fail-fast: false

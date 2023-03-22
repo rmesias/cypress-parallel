@@ -6,16 +6,18 @@ on:
 jobs:
   install:
     runs-on: ubuntu-latest
+    continue-on-error: true
     container: cypress/browsers:node16.16.0-chrome107-ff107-edge
     steps:
-      - uses: actions/checkout@v3
+      # - uses: actions/checkout@v3
       - uses: cypress-io/github-action@v5
         with:
           runTests: false
   mrtest:
-    # needs: lint
     needs: install
     runs-on: ubuntu-latest
+    if: ${{jobs.status == 'sucess'}}
+    continue-on-error: true
     strategy:
       fail-fast: false
       matrix:

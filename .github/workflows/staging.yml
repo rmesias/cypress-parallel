@@ -39,5 +39,4 @@ jobs:
         continue-on-error: true
         
       - name: Set current date as env variable
-        if:  ${{steps.build.status == 'success'}}
         run: echo "### report link https://admin-staging.aonewallet.com/  :" >> $GITHUB_STEP_SUMMARY

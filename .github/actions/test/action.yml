@@ -16,15 +16,17 @@ runs:
 
   steps:
     - name: Install dependencies
+      with:
+        working-directory: test
       shell: bash
       run: |
-        cd test/
         npm install
     
     - name: Run Test
+      with:
+        working-directory: test
       shell: bash
       run: |
-        cd test/
         pwd
         CYPRESS_BASE_URL=https://admin-staging.aonewallet.com/ npx cypress run 
         --env tags=@affiliates,jsonOutput=cypress/cucumber-json/cucumber-report_${{ inputs.MATRIX_CONTAINERS }}.json 

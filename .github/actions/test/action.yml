@@ -13,9 +13,8 @@ runs:
   steps:
     - name: Install dependencies
       shell: bash
-      run: npm install
-      with:
-        working-directory: test
+      run: cd test/
+        npm install
     
     - name: Run Test
       shell: bash

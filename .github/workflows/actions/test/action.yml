@@ -1,0 +1,28 @@
+name: Run Cypress UI-Test
+
+inputs:
+  ENVIRONMENT:
+    required: true
+  TEST_TAGS:
+    required: true
+  MATRIX_CONTAINERS:
+    required: true
+
+runs:
+  using: composite
+
+  steps:
+    - name: Checkout
+      shell: bash
+      run: actions/checkout@v3
+      
+    - name: Install dependencies
+      shell: bash
+      run: npm install
+    
+    - name: Run Test
+      shell: bash
+      run: >
+          CYPRESS_BASE_URL=https://admin-staging.aonewallet.com/ npx cypress run 
+          --env tags=@affiliates,jsonOutput=cypress/cucumber-json/cucumber-report_${{ inputs.MATRIX_CONTAINERS }}.json 
+          --spec $(npx ts-node scripts/cypress-spec-split.ts 5 ${{ inputs.MATRIX_CONTAINERS }}) --browser chrome

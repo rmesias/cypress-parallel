@@ -2,6 +2,32 @@
 name: UI-E2E Test Cypress
 on: 
   workflow_dispatch:
+    inputs:
+      test-tags:
+        type: choice
+        required: true
+        default: 'critical'
+        description: 'Select test tag'
+        options:
+        - critical
+        - regression
+        - regression_2_0
+      environment:
+        type: choice
+        required: true
+        default: 'https://uitest.test.medirecords.com/ui-automation/'
+        description: 'Select test environment'
+        options:
+        - https://uitest.test.medirecords.com/ui-automation/
+
+  workflow_call:
+    inputs:
+      test-tags:
+        type: string
+        required: true
+      environment:
+        type: string
+        required: true
 
 jobs:
   mrtest:
@@ -22,12 +48,14 @@ jobs:
           browser: ${{ matrix.browser }}
           record: false
           parallel: false
-      - run: >
-          CYPRESS_BASE_URL=https://admin-staging.aonewallet.com/ npx cypress run 
-          --env tags=@affiliates,jsonOutput=cypress/cucumber-json/cucumber-report_${{ matrix.containers }}.json 
-          --spec $(npx ts-node scripts/cypress-spec-split.ts 5 ${{ matrix.containers }}) --browser ${{ matrix.browser }}
-        id: build
-        continue-on-error: true
+
+      - name: Run UI automation composite
+        uses: ./.github/actions/test
+        with:
+          ENVIRONMENT: ${{inputs.environment}}
+          TEST_TAGS: ${{inputs.test-tags}}
+          MATRIX_CONTAINERS: ${{matrix.containers}}
+
         
       - name: Set current date as env variable
         run: echo "### report link https://admin-staging.aonewallet.com/  :" >> $GITHUB_STEP_SUMMARY

@@ -8,18 +8,16 @@ inputs:
   MATRIX_CONTAINERS:
     required: true
 
+defaults:
+  run:
+    working-directory: test
+
 runs:
   using: composite
   steps:
-    - name: Install dependencies
-      shell: bash
-      run: |
-        cd test/
-        npm install
-    
     - name: Run Test
       shell: bash
-      run: >
-          CYPRESS_BASE_URL=https://admin-staging.aonewallet.com/ npx cypress run 
-          --env tags=@affiliates,jsonOutput=cypress/cucumber-json/cucumber-report_${{ inputs.MATRIX_CONTAINERS }}.json 
-          --spec $(npx ts-node scripts/cypress-spec-split.ts 5 ${{ inputs.MATRIX_CONTAINERS }}) --browser chrome
+      run: > 
+        CYPRESS_BASE_URL=https://admin-staging.aonewallet.com/ npx cypress run 
+        --env tags=@affiliates,jsonOutput=cypress/cucumber-json/cucumber-report_${{ inputs.MATRIX_CONTAINERS }}.json 
+        --spec $(npx ts-node scripts/cypress-spec-split.ts 5 ${{ inputs.MATRIX_CONTAINERS }}) --browser chrome

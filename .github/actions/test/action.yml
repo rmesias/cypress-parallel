@@ -14,7 +14,9 @@ runs:
 
     - name: Install
       shell: bash
-      run: npm install
+      run: |
+        pwd
+        npm install
       working-directory: test
 
     - name: Run Test

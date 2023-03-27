@@ -15,6 +15,11 @@ defaults:
 runs:
   using: composite
   steps:
+
+    - name: Install
+      shell: bash
+      run: npm install
+
     - name: Run Test
       shell: bash
       run: > 

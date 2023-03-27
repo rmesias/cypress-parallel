@@ -41,6 +41,8 @@ jobs:
     container: cypress/browsers:node16.16.0-chrome107-ff107-edge
     steps:
       - uses: actions/checkout@v3
+        with:
+          working-directory: test/
 
       - name: Run UI automation composite
         uses: ./.github/actions/test

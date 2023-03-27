@@ -13,21 +13,15 @@ inputs:
 runs:
   using: composite
 
-
   steps:
     - name: Install dependencies
-      with:
-        working-directory: test
       shell: bash
       run: |
         npm install
     
     - name: Run Test
-      with:
-        working-directory: test
       shell: bash
       run: |
-        pwd
         CYPRESS_BASE_URL=https://admin-staging.aonewallet.com/ npx cypress run 
         --env tags=@affiliates,jsonOutput=cypress/cucumber-json/cucumber-report_${{ inputs.MATRIX_CONTAINERS }}.json 
         --spec $(npx ts-node scripts/cypress-spec-split.ts 5 ${{ inputs.MATRIX_CONTAINERS }}) --browser chrome

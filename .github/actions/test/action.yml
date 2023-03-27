@@ -16,7 +16,7 @@ runs:
       with:
         working-directory: test
         runTests: false
-        wait-on: ${{inputs.environment}}
+        wait-on: 'https://admin-staging.aonewallet.com/'
         record: false
         parallel: false
     

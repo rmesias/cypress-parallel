@@ -45,6 +45,7 @@ jobs:
       - name: Run UI automation composite
         uses: ./.github/actions/test
         with:
+          working-directory: test
           ENVIRONMENT: ${{inputs.environment}}
           TEST_TAGS: ${{inputs.test-tags}}
           MATRIX_CONTAINERS: ${{matrix.containers}}

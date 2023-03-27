@@ -1,5 +1,5 @@
 name: Run Cypress UI-Test
-
+working-directory: /my/project/directory
 inputs:
   ENVIRONMENT:
     required: true
